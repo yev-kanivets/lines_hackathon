@@ -71,7 +71,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeTurn() {
-        matrix.generateDots(3)
+        matrix.run {
+            generateDots(3)
+            checkResult()
+        }
         draw()
     }
 
