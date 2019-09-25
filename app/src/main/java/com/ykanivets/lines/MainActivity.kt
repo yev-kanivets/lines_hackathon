@@ -16,11 +16,15 @@ class MainActivity : AppCompatActivity() {
 
     private var turns = 0
     private var score = 0
-    private val matrix = Array(9) { Array(9) { Cell() } }
+    private lateinit var matrix: Array<Array<Cell>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        turns = readTurns()
+        score = readScore()
+        matrix = readMatrix()
 
         initCanvas()
 
@@ -88,6 +92,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Game Over", Toast.LENGTH_SHORT).show()
             }
         }
+        writeTurns(turns)
+        writeScore(score)
+        writeMatrix(matrix)
         draw()
     }
 
