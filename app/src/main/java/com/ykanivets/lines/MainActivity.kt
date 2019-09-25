@@ -3,7 +3,6 @@ package com.ykanivets.lines
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -13,13 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.canvas
 
 class MainActivity : AppCompatActivity() {
 
-    data class Cell(
-        val y: Int = 0,
-        val x: Int = 0,
-        val view: View? = null,
-        var type: Int = 0
-    )
-
     private val matrix = Array(9) { Array(9) { Cell() } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         initCanvas()
 
-        matrix[1][1].type = 2
-
-        btnDraw.setOnClickListener { draw() }
+        btnDraw.setOnClickListener {
+            matrix.generateDots(3)
+            draw()
+        }
     }
 
     private fun initCanvas() {
@@ -71,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                         4 -> Color.YELLOW
                         5 -> Color.MAGENTA
                         6 -> Color.CYAN
+                        7 -> Color.WHITE
                         else -> Color.GRAY
                     }
                     background = ColorDrawable(color)
