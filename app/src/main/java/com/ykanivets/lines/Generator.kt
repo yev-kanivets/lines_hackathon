@@ -50,16 +50,18 @@ fun Array<Array<Cell>>.checkResult(): Int {
     val height = size - 1
     val width = this[0].size - 1
 
+    var result = 0
+
     for (y in 0..height) {
         for (x in 0..width) {
             if (this[y][x].type != 0) {
-                checkHorizontal(y, x)
-                checkVertical(y, x)
+                result += checkHorizontal(y, x)
+                result += checkVertical(y, x)
             }
         }
     }
 
-    return 0
+    return result
 }
 
 private fun Array<Array<Cell>>.checkHorizontal(y: Int, x: Int): Int {

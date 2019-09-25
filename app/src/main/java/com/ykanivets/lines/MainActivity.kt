@@ -9,9 +9,13 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.canvas
+import kotlinx.android.synthetic.main.activity_main.tvScore
+import kotlinx.android.synthetic.main.activity_main.tvTurns
 
 class MainActivity : AppCompatActivity() {
 
+    private var turns = 0
+    private var score = 0
     private val matrix = Array(9) { Array(9) { Cell() } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun draw() {
+        tvTurns.text = "Turns: $turns"
+        tvScore.text = "Score: $score"
+
         matrix.forEach { row ->
             row.forEach { cell ->
                 cell.view?.apply {
@@ -72,10 +79,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeTurn() {
+        turns++
         matrix.run {
             generateDots(3)
             if (matrix.isTurnPossible()) {
-                checkResult()
+                score += checkResult()
             } else {
                 Toast.makeText(this@MainActivity, "Game Over", Toast.LENGTH_SHORT).show()
             }
