@@ -38,6 +38,7 @@ fun Array<Array<Cell>>.checkResult(): Int {
         for (x in 0..width) {
             if (this[y][x].type != 0) {
                 checkHorizontal(y, x)
+                checkVertical(y, x)
             }
         }
     }
@@ -74,6 +75,47 @@ fun Array<Array<Cell>>.checkHorizontal(y: Int, x: Int): Int {
         if (x + 1 <= width) {
             for (p in (x + 1)..width) {
                 if (this[y][p].type == this[y][x].type) this[y][p].type = 0
+                else break
+            }
+        }
+
+        this[y][x].type = 0
+
+        MIN_RESULT + (total - MIN_RESULT) * MULTIPLIER
+    } else {
+        0
+    }
+}
+
+fun Array<Array<Cell>>.checkVertical(y: Int, x: Int): Int {
+    val height = size - 1
+
+    var top = 0
+    var down = 0
+
+    for (p in y downTo 0) {
+        if (this[p][x].type == this[y][x].type) top++
+        else break
+    }
+
+    for (p in y..height) {
+        if (this[p][x].type == this[y][x].type) down++
+        else break
+    }
+
+    val total = top + down - 1
+
+    return if (total >= MIN_RESULT) {
+        if (y - 1 >= 0) {
+            for (p in (y - 1) downTo 0) {
+                if (this[p][x].type == this[y][x].type) this[p][x].type = 0
+                else break
+            }
+        }
+
+        if (y + 1 <= height) {
+            for (p in (y + 1)..height) {
+                if (this[p][x].type == this[y][x].type) this[p][x].type = 0
                 else break
             }
         }
