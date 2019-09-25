@@ -7,16 +7,6 @@
     tools:context=".MainActivity"
     >
 
-  <Button
-      android:id="@+id/btnDraw"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Draw"
-      app:layout_constraintBottom_toTopOf="@id/canvas"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      />
-
   <LinearLayout
       android:id="@+id/canvas"
       android:layout_width="0dp"

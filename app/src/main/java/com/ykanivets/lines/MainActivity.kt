@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.btnDraw
 import kotlinx.android.synthetic.main.activity_main.canvas
 
 class MainActivity : AppCompatActivity() {
@@ -20,10 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         initCanvas()
 
-        btnDraw.setOnClickListener {
-            matrix.generateDots(3)
-            draw()
-        }
+        makeTurn()
     }
 
     private fun initCanvas() {
@@ -45,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                     )
                     background = ColorDrawable(Color.GRAY)
                 }
+                view.setOnClickListener { onCellClicked(y, x) }
                 matrix[y][x] = Cell(y, x, view)
                 layout.addView(view)
             }
@@ -71,5 +68,38 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun makeTurn() {
+        matrix.generateDots(3)
+        draw()
+    }
+
+    private var sourceY = -1
+    private var sourceX = -1
+    private var isWaitingTarget = false
+
+    private fun onCellClicked(y: Int, x: Int) {
+        if (isWaitingTarget) {
+            if (matrix[y][x].type != 0) {
+                return
+            }
+
+            matrix[y][x].type = matrix[sourceY][sourceX].type
+            matrix[sourceY][sourceX].type = 0
+
+            sourceY = -1
+            sourceX = -1
+
+            makeTurn()
+        } else {
+            if (matrix[y][x].type == 0) {
+                return
+            }
+
+            sourceY = y
+            sourceX = x
+        }
+        isWaitingTarget = !isWaitingTarget
     }
 }
