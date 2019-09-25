@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
     private fun onCellClicked(y: Int, x: Int) {
         if (isWaitingTarget) {
             if (matrix[y][x].type != 0) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Can't move cell to not empty place",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return
             }
 
@@ -110,6 +115,8 @@ class MainActivity : AppCompatActivity() {
             makeTurn()
         } else {
             if (matrix[y][x].type == 0) {
+                Toast.makeText(this@MainActivity, "Select source cell first", Toast.LENGTH_SHORT)
+                    .show()
                 return
             }
 
