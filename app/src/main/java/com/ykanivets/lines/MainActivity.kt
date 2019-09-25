@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.btnRestart
 import kotlinx.android.synthetic.main.activity_main.canvas
 import kotlinx.android.synthetic.main.activity_main.tvScore
 import kotlinx.android.synthetic.main.activity_main.tvTurns
@@ -25,6 +26,16 @@ class MainActivity : AppCompatActivity() {
         turns = readTurns()
         score = readScore()
         matrix = readMatrix()
+
+        btnRestart.setOnClickListener {
+            turns = 0
+            score = 0
+            matrix = Array(9) { Array(9) { Cell() } }
+            isWaitingTarget = false
+            canvas.removeAllViews()
+            initCanvas()
+            makeTurn()
+        }
 
         initCanvas()
 
