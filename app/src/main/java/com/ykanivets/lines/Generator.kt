@@ -9,11 +9,12 @@ data class Cell(
     var type: Int = 0
 )
 
+const val DOTS_GENERATED_PER_TURN = 3
 const val MAX_TYPE = 7
 const val MIN_RESULT = 5
 const val MULTIPLIER = 5
 
-fun Array<Array<Cell>>.generateDots(numberOfDots: Int = 3) {
+fun Array<Array<Cell>>.generateDots(numberOfDots: Int = DOTS_GENERATED_PER_TURN) {
     val height = size - 1
     val width = this[0].size - 1
 
@@ -28,6 +29,21 @@ fun Array<Array<Cell>>.generateDots(numberOfDots: Int = 3) {
             this[y][x].type = (1..MAX_TYPE).shuffled().first()
         }
     }
+}
+
+fun Array<Array<Cell>>.isTurnPossible(): Boolean {
+    val height = size - 1
+    val width = this[0].size - 1
+
+    var available = 0
+
+    for (y in 0..height) {
+        for (x in 0..width) {
+            if (this[y][x].type == 0) available++
+        }
+    }
+
+    return available >= DOTS_GENERATED_PER_TURN
 }
 
 fun Array<Array<Cell>>.checkResult(): Int {
@@ -46,7 +62,7 @@ fun Array<Array<Cell>>.checkResult(): Int {
     return 0
 }
 
-fun Array<Array<Cell>>.checkHorizontal(y: Int, x: Int): Int {
+private fun Array<Array<Cell>>.checkHorizontal(y: Int, x: Int): Int {
     val width = this[0].size - 1
 
     var left = 0
@@ -87,7 +103,7 @@ fun Array<Array<Cell>>.checkHorizontal(y: Int, x: Int): Int {
     }
 }
 
-fun Array<Array<Cell>>.checkVertical(y: Int, x: Int): Int {
+private fun Array<Array<Cell>>.checkVertical(y: Int, x: Int): Int {
     val height = size - 1
 
     var top = 0

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.canvas
 
@@ -73,7 +74,11 @@ class MainActivity : AppCompatActivity() {
     private fun makeTurn() {
         matrix.run {
             generateDots(3)
-            checkResult()
+            if (matrix.isTurnPossible()) {
+                checkResult()
+            } else {
+                Toast.makeText(this@MainActivity, "Game Over", Toast.LENGTH_SHORT).show()
+            }
         }
         draw()
     }
